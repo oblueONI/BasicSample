@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/oblueONI/BasicSample.svg?style=svg)](https://circleci.com/gh/oblueONI/BasicSample)
+
 # Basic sample for Espresso
 
 *If you are new to Espresso, try this sample first.*
