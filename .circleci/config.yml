@@ -62,7 +62,7 @@ jobs:
       - *decode_gservices_key
       - run:
           name: Gradle build (debug)
-          command: ./gradlew -PciBuild=true :assembleDebug :assembleAndroidTest
+          command: ./gradlew -PciBuild=true assembleDebug assembleAndroidTest
 
 workflows:
   version: 2
