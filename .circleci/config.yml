@@ -59,6 +59,7 @@ jobs:
           command: chmod +x gradlew && ./gradlew androidDependencies
       - *save_cache
       - *export_gservices_key
+      - *decode_gservices_key
 
 workflows:
   version: 2
