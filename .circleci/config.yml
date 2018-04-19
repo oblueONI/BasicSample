@@ -24,6 +24,9 @@ jobs:
 
   build:
     <<: *android_config
+    steps:
+      - checkout
+
 
 workflows:
   version: 2
