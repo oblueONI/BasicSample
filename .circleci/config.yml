@@ -2,6 +2,14 @@ version: 2
 
 references:
 
+  ## Cache
+
+  cache_key: &cache_key
+    key: cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle" }}-{{ checksum "mobile/build.gradle" }}
+  restore_cache: &restore_cache
+    restore_cache:
+      <<: *cache_key
+
   ## Workspace
 
   workspace: &workspace
@@ -26,6 +34,7 @@ jobs:
     <<: *android_config
     steps:
       - checkout
+      - *restore_cache
 
 
 workflows:
