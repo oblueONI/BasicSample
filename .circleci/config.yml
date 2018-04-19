@@ -1,7 +1,7 @@
 version: 2
 
 references:
-## Docker image configurations
+  ## Docker image configurations
   android_config: &android_config
     working_directory: *workspace
     docker:
@@ -11,7 +11,7 @@ references:
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
 
-## Workspace
+  ## Workspace
   workspace: &workspace
     ~/workspace
 
@@ -24,4 +24,4 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - build_debug
+      - build
