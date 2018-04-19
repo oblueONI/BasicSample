@@ -5,7 +5,7 @@ references:
   ## Workspace
 
   workspace: &workspace
-    - ~/workspace
+    ~/workspace
 
   ## Docker image configurations
 
