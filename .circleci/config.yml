@@ -20,6 +20,15 @@ references:
 
   workspace: &workspace
     ~/workspace
+  persist_debug_workspace: &persist_debug_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+        - mobile/build/intermediates
+        - mobile/build/outputs/androidTest-results
+        - mobile/build/outputs/apk
+        - mobile/build/outputs/code-coverage
+        - mobile/build/test-results
 
   ## Docker image configurations
 
@@ -63,6 +72,7 @@ jobs:
       - run:
           name: Gradle build (debug)
           command: ./gradlew -PciBuild=true assembleDebug assembleAndroidTest
+      - *persist_debug_workspace
 
 workflows:
   version: 2
