@@ -37,7 +37,7 @@ jobs:
       - *restore_cache
       - run:
           name: Download dependencies
-          command: ./gradlew androidDependencies
+          command: chmod +x gradlew && ./gradlew androidDependencies
 
 workflows:
   version: 2
