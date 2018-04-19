@@ -1,55 +1,23 @@
-# Java Gradle CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
-version: 2
-jobs:
-  build:
+references:
+
+## Docker image configurations
+
+  android_config: &android_config
+    working_directory: *workspace
     docker:
-      # specify the version you desire here
       - image: circleci/android:api-27-alpha
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
-
     environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
       TERM: dumb
+      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
 
-    steps:
-      - checkout
+jobs:
+  ## Build debug APK and instrumented test APK
+  build_debug:
+    <<: *android_config
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: Access Dependencies
-          command: chmod +x gradlew
-
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # run lint
-      - run:
-          name: Run Lint
-          command: ./gradlew lint test
-
-      # install google cloud sdk
-      - run:
-          name: install google cloud sd
-          command: export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && sudo apt-get update -y && sudo apt-get install google-cloud-sdk -y
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build_debug
