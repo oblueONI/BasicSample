@@ -43,7 +43,7 @@ references:
   decode_gservices_key: &decode_gservices_key
     run:
       name: Decode Google Services key
-      command: echo $GOOGLE_SERVICES_KEY | base64 -di > mobile/google-services.json
+      command: mkdir -p mobile && echo $GOOGLE_SERVICES_KEY | base64 -di > mobile/google-services.json
 
 jobs:
 
