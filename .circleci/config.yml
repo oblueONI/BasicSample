@@ -60,6 +60,9 @@ jobs:
       - *save_cache
       - *export_gservices_key
       - *decode_gservices_key
+      - run:
+          name: Gradle build (debug)
+          command: ./gradlew -PciBuild=true :mobile:assembleDebug :mobile:assembleAndroidTest
 
 workflows:
   version: 2
