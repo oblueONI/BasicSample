@@ -1,5 +1,6 @@
-references:
+version: 2
 
+references:
 ## Docker image configurations
   android_config: &android_config
     working_directory: *workspace
