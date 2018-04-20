@@ -27,11 +27,11 @@ references:
     persist_to_workspace:
       root: *workspace
       paths:
-        - mobile/build/intermediates
-        - mobile/build/outputs/androidTest-results
-        - mobile/build/outputs/apk
-        - mobile/build/outputs/code-coverage
-        - mobile/build/test-results
+        - app/build/intermediates
+        - app/build/outputs/androidTest-results
+        - app/build/outputs/apk
+        - app/build/outputs/code-coverage
+        - app/build/test-results
 
   ## Docker image configurations
 
@@ -92,12 +92,9 @@ jobs:
       - run:
           name: Gradle build (debug)
           command: ./gradlew -PciBuild=true assembleDebug assembleAndroidTest
-      - run:
-          name: Add workspace directories
-          command: mkdir -p ~/workspace/mobile/build/intermediates && mkdir -p ~/workspace/mobile/build/outputs/androidTest-results && mkdir -p ~/workspace/mobile/build/outputs/apk && mkdir -p ~/workspace/mobile/build/outputs/code-coverage && mkdir -p ~/workspace/mobile/build/test-results
       - *persist_debug_workspace
       - store_artifacts:
-          path: mobile/build/outputs/apk/
+          path: app/build/outputs/apk/
           destination: /apk/
 
   ## Run instrumented tests
@@ -116,7 +113,7 @@ jobs:
           command: gcloud auth activate-service-account firebase-adminsdk-8xf1w@espressobasicsample.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
       - run:
           name: Run instrumented test on Firebase Test Lab
-          command: gcloud firebase test android run --type instrumentation --app mobile/build/outputs/apk/app-debug.apk --test mobile/build/outputs/apk/app-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
+          command: gcloud firebase test android run --type instrumentation --app app/build/outputs/apk/debug/app-debug.apk --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk --device model=sailfish,version=26,locale=en_US,orientation=portrait --environment-variables coverage=true,coverageFile=/sdcard/tmp/code-coverage/connected/coverage.ec --directories-to-pull=/sdcard/tmp --timeout 20m
 
 workflows:
   version: 2
