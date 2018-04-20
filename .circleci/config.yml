@@ -102,7 +102,7 @@ jobs:
           command: gcloud config set project espressobasicsample
       - run:
           name: Authenticate with Google Cloud
-          command: gcloud auth activate-service-account firebase-adminsdk-p9qvk@newspaper-84169.iam.gserviceaccount.com --key-file mobile/google-services.json
+          command: gcloud auth activate-service-account espressobasicsample@appspot.gserviceaccount.com --key-file mobile/google-services.json
 
 workflows:
   version: 2
