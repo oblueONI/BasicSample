@@ -95,6 +95,11 @@ jobs:
     <<: *gcloud_config
     steps:
       - *attach_debug_workspace
+      - *export_gservices_key
+      - *decode_gservices_key
+      - run:
+          name: Set Google Cloud target project
+          command: gcloud config set project espressobasicsample
 
 workflows:
   version: 2
