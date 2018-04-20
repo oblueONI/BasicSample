@@ -20,6 +20,9 @@ references:
 
   workspace: &workspace
     ~/workspace
+  attach_debug_workspace: &attach_debug_workspace
+    attach_workspace:
+      at: *workspace
   persist_debug_workspace: &persist_debug_workspace
     persist_to_workspace:
       root: *workspace
@@ -40,6 +43,12 @@ references:
       TERM: dumb
       _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+  gcloud_config: &gcloud_config
+    working_directory: *workspace
+    docker:
+      - image: google/cloud-sdk:latest
+    environment:
+      TERM: dumb
 
   ## Keys
 
@@ -80,8 +89,18 @@ jobs:
           path: mobile/build/outputs/apk/
           destination: /apk/
 
+  ## Run instrumented tests
+
+  test_instrumented:
+    <<: *gcloud_config
+    steps:
+      - *attach_debug_workspace
+
 workflows:
   version: 2
   workflow:
     jobs:
       - build
+      - test_instrumented:
+          requires:
+            - build
