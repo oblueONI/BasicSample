@@ -68,11 +68,11 @@ references:
   export_gcloud_key: &export_gcloud_key
     run:
       name: Export Google Cloud Service key environment variable
-      command: echo 'export $GOOGLE_SERVICES_KEY="$GOOGLE_SERVICES_KEY"' >> $BASH_ENV
+      command: echo 'export $GCLOUD_SERVICE_KEY="$GCLOUD_SERVICE_KEY"' >> $BASH_ENV
   decode_gcloud_key: &decode_gcloud_key
     run:
       name: Decode Google Cloud credentials
-      command: echo $GOOGLE_SERVICES_KEY | base64 -di > ${HOME}/client-secret.json
+      command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/client-secret.json
 
 jobs:
 
@@ -113,7 +113,7 @@ jobs:
           command: gcloud config set project espressobasicsample
       - run:
           name: Authenticate with Google Cloud
-          command: gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
+          command: gcloud auth activate-service-account firebase-adminsdk-8xf1w@espressobasicsample.iam.gserviceaccount.com --key-file ${HOME}/client-secret.json
 
 workflows:
   version: 2
