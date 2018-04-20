@@ -21,9 +21,6 @@ references:
   workspace: &workspace
     ~/workspace
   persist_debug_workspace: &persist_debug_workspace
-    run:
-      name: Add workspace directories
-      command: mkdir -p ~/workspace/mobile/build/intermediates && mkdir -p ~/workspace/mobile/build/outputs/androidTest-results && mkdir -p ~/workspace/mobile/build/outputs/apk && mkdir -p ~/workspace/mobile/build/outputs/code-coverage && mkdir -p ~/workspace/mobile/build/test-results
     persist_to_workspace:
       root: *workspace
       paths:
@@ -75,6 +72,9 @@ jobs:
       - run:
           name: Gradle build (debug)
           command: ./gradlew -PciBuild=true assembleDebug assembleAndroidTest
+      - run:
+          name: Add workspace directories
+          command: mkdir -p ~/workspace/mobile/build/intermediates && mkdir -p ~/workspace/mobile/build/outputs/androidTest-results && mkdir -p ~/workspace/mobile/build/outputs/apk && mkdir -p ~/workspace/mobile/build/outputs/code-coverage && mkdir -p ~/workspace/mobile/build/test-results
       - *persist_debug_workspace
 
 workflows:
